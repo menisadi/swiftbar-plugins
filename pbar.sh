@@ -18,12 +18,14 @@ function hex(t) {
   return "#FF3B30"
 }
 
-function dot(t) {
-  if (t < 0)   return "⚫"
-  if (t < 50)  return "🟢"
-  if (t < 100) return "🟡"
-  if (t < 200) return "🟠"
-  return "🔴"
+function sfcfg(t,   c, cmd, b) {
+  c = hex(t)
+  if (!(c in cfg)) {
+    cmd = "printf %s '\''{\"renderingMode\":\"Palette\",\"colors\":[\"" c "\"],\"scale\":\"small\"}'\'' | base64"
+    cmd | getline b; close(cmd)
+    cfg[c] = b
+  }
+  return cfg[c]
 }
 
 function cell(t,   c) {
@@ -47,7 +49,7 @@ function push(t,   i, start, h, ok, sum, lost, n, label) {
   label = (t < 0) ? "timeout" : sprintf("%d ms", t)
 
   print "~~~"
-  printf "%s %s\n", dot(t), label
+  printf "%s | sfimage=circle.fill sfconfig=%s\n", label, sfcfg(t)
   print "---"
   printf "%s | ansi=true font=Menlo size=15 bash=/usr/bin/true terminal=false\n", h
   if (ok) printf "avg %.0f ms · loss %d/%d | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", sum/ok, lost, n
