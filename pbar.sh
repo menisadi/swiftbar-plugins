@@ -28,10 +28,10 @@ function dot(t) {
 
 function cell(t,   c) {
   if (t < 0) return ESC "[90m░" ESC "[0m"
-  if (t < 50)       c = "32"
-  else if (t < 100) c = "33"
-  else if (t < 200) c = "38;5;208"
-  else              c = "31"
+  if (t < 50)       c = "1;92"
+  else if (t < 100) c = "1;93"
+  else if (t < 200) c = "1;38;5;208"
+  else              c = "1;91"
   return ESC "[" c "m█" ESC "[0m"
 }
 
@@ -49,7 +49,7 @@ function push(t,   i, start, h, ok, sum, lost, n, label) {
   print "~~~"
   printf "%s %s\n", dot(t), label
   print "---"
-  printf "%s | ansi=true font=Menlo size=12\n", h
+  printf "%s | ansi=true font=Menlo size=15\n", h
   if (ok) printf "avg %.0f ms · loss %d/%d | font=Menlo size=12\n", sum/ok, lost, n
   printf "host: %s | font=Menlo size=12\n", host
   fflush()
