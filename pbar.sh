@@ -53,9 +53,11 @@ function push(t,   i, start, h, ok, sum, lost, n, label) {
   printf " | sfimage=circle.fill sfconfig=%s\n", sfcfg(t)
   print "---"
   printf "%s | ansi=true font=Menlo size=15 bash=/usr/bin/true terminal=false\n", h
-  printf "now %s | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", label
-  if (ok) printf "avg %.0f ms · loss %d/%d | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", sum/ok, lost, n
-  printf "host: %s | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", host
+  print "---"
+  printf "now    %s | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", label
+  if (ok) printf "avg    %.0f ms | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", sum/ok
+  printf "loss   %d/%d | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", lost, n
+  printf "host   %s | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", host
   fflush()
 }
 
