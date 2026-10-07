@@ -49,9 +49,9 @@ function push(t,   i, start, h, ok, sum, lost, n, label) {
   print "~~~"
   printf "%s %s\n", dot(t), label
   print "---"
-  printf "%s | ansi=true font=Menlo size=15\n", h
-  if (ok) printf "avg %.0f ms · loss %d/%d | font=Menlo size=12\n", sum/ok, lost, n
-  printf "host: %s | font=Menlo size=12\n", host
+  printf "%s | ansi=true font=Menlo size=15 bash=/usr/bin/true terminal=false\n", h
+  if (ok) printf "avg %.0f ms · loss %d/%d | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", sum/ok, lost, n
+  printf "host: %s | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", host
   fflush()
 }
 
