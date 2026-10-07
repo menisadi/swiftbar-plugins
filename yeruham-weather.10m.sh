@@ -73,6 +73,12 @@ compass() {
   echo "${pts[$(( (${1%.*} * 100 + 1125) / 2250 % 16 ))]}"
 }
 
+# fmt <decimals> <value>: round numbers, pass "–" through
+fmt() {
+  [[ "$2" =~ ^-?[0-9.]+$ ]] || { echo "$2"; return; }
+  printf "%.${1}f" "$2"
+}
+
 age_min=""
 [[ "$epoch" =~ ^[0-9]+$ ]] && age_min=$(( ( $(date +%s) - epoch ) / 60 ))
 
@@ -84,11 +90,11 @@ echo "$title"
 
 echo "---"
 echo "Yeruham · $STATION | size=12"
-echo "Humidity: ${hum}% (dew point ${dew}°C) | sfimage=humidity bash=/usr/bin/true terminal=false"
-echo "Wind: ${wspd} km/h $(compass "$wdir"), gusts ${wgust} | sfimage=wind bash=/usr/bin/true terminal=false"
-echo "Pressure: ${pres} hPa | sfimage=gauge bash=/usr/bin/true terminal=false"
-echo "Rain: ${rate} mm/h now, ${rain} mm today | sfimage=cloud.rain bash=/usr/bin/true terminal=false"
-echo "UV ${uv} · Solar ${sol} W/m² | sfimage=sun.max bash=/usr/bin/true terminal=false"
+echo "Humidity: $(fmt 0 "$hum")% (dew point ${dew}°C) | sfimage=humidity bash=/usr/bin/true terminal=false"
+echo "Wind: ${wspd} km/h $(compass "$wdir"), gusts $(fmt 0 "$wgust") km/h | sfimage=wind bash=/usr/bin/true terminal=false"
+echo "Pressure: $(fmt 0 "$pres") hPa | sfimage=gauge bash=/usr/bin/true terminal=false"
+echo "Rain: $(fmt 1 "$rate") mm/h now, $(fmt 1 "$rain") mm today | sfimage=cloud.rain bash=/usr/bin/true terminal=false"
+echo "UV $(fmt 0 "$uv") · Solar $(fmt 0 "$sol") W/m² | sfimage=sun.max bash=/usr/bin/true terminal=false"
 echo "---"
 if [ -n "$age_min" ]; then
   echo "Updated ${obs#* } (${age_min} min ago) | size=11"
