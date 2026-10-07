@@ -28,13 +28,14 @@ function sfcfg(t,   c, cmd, b) {
   return cfg[c]
 }
 
+# nearest xterm-256 colors to hex() (SwiftBar has no truecolor ANSI)
 function cell(t,   c) {
   if (t < 0) return ESC "[90m░" ESC "[0m"
-  if (t < 50)       c = "1;92"
-  else if (t < 100) c = "1;93"
-  else if (t < 200) c = "1;38;5;208"
-  else              c = "1;91"
-  return ESC "[" c "m█" ESC "[0m"
+  if (t < 50)       c = 77
+  else if (t < 100) c = 220
+  else if (t < 200) c = 208
+  else              c = 196
+  return ESC "[38;5;" c "m█" ESC "[0m"
 }
 
 function push(t,   i, start, h, ok, sum, lost, n, label) {
