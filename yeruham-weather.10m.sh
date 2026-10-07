@@ -76,12 +76,11 @@ compass() {
 age_min=""
 [[ "$epoch" =~ ^[0-9]+$ ]] && age_min=$(( ( $(date +%s) - epoch ) / 60 ))
 
-# fixed width; trim=false keeps the padding
-title="$(printf '%2.0f' "$temp")°C"
+title="$(printf '%.0f' "$temp")°C"
 if [ -n "$age_min" ] && [ "$age_min" -gt "$STALE_MIN" ]; then
   title="⚠ $title"
 fi
-echo "$title | font=Menlo trim=false"
+echo "$title"
 
 echo "---"
 echo "Yeruham · $STATION | size=12"
