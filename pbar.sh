@@ -47,13 +47,13 @@ function push(t,   i, start, h, ok, sum, lost, n, label) {
     h = h cell(s[i]); n++
     if (s[i] >= 0) { ok++; sum += s[i] } else lost++
   }
-  # fixed width (6 chars); trim=false keeps the padding
-  label = (t < 0) ? sprintf("%6s", "TO") : sprintf("%3d ms", t)
+  label = (t < 0) ? "timeout" : sprintf("%d ms", t)
 
   print "~~~"
-  printf "%s | sfimage=circle.fill sfconfig=%s font=Menlo trim=false\n", label, sfcfg(t)
+  printf " | sfimage=circle.fill sfconfig=%s\n", sfcfg(t)
   print "---"
   printf "%s | ansi=true font=Menlo size=15 bash=/usr/bin/true terminal=false\n", h
+  printf "now %s | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", label
   if (ok) printf "avg %.0f ms · loss %d/%d | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", sum/ok, lost, n
   printf "host: %s | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", host
   fflush()
