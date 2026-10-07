@@ -47,10 +47,12 @@ function push(t,   i, start, h, ok, sum, lost, n, label) {
     h = h cell(s[i]); n++
     if (s[i] >= 0) { ok++; sum += s[i] } else lost++
   }
-  label = (t < 0) ? "timeout" : sprintf("%d ms", t)
+  # fixed width (7 chars), padded with NBSP so SwiftBar will not trim it
+  label = (t < 0) ? "timeout" : sprintf("%4d ms", t)
+  gsub(/ /, "\302\240", label)
 
   print "~~~"
-  printf "%s | sfimage=circle.fill sfconfig=%s\n", label, sfcfg(t)
+  printf "%s | sfimage=circle.fill sfconfig=%s font=Menlo\n", label, sfcfg(t)
   print "---"
   printf "%s | ansi=true font=Menlo size=15 bash=/usr/bin/true terminal=false\n", h
   if (ok) printf "avg %.0f ms · loss %d/%d | font=Menlo size=12 bash=/usr/bin/true terminal=false\n", sum/ok, lost, n

@@ -76,11 +76,13 @@ compass() {
 age_min=""
 [[ "$epoch" =~ ^[0-9]+$ ]] && age_min=$(( ( $(date +%s) - epoch ) / 60 ))
 
-title="$(printf '%.0f' "$temp")°C"
+# fixed width, padded with NBSP so SwiftBar doesn't trim it
+title="$(printf '%3.0f' "$temp")°C"
+title="${title// /$'\302\240'}"
 if [ -n "$age_min" ] && [ "$age_min" -gt "$STALE_MIN" ]; then
   title="⚠ $title"
 fi
-echo "$title"
+echo "$title | font=Menlo"
 
 echo "---"
 echo "Yeruham · $STATION | size=12"
