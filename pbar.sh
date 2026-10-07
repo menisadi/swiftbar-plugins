@@ -18,6 +18,14 @@ function hex(t) {
   return "#FF3B30"
 }
 
+function dot(t) {
+  if (t < 0)   return "⚫"
+  if (t < 50)  return "🟢"
+  if (t < 100) return "🟡"
+  if (t < 200) return "🟠"
+  return "🔴"
+}
+
 function cell(t,   c) {
   if (t < 0) return ESC "[90m░" ESC "[0m"
   if (t < 50)       c = "32"
@@ -36,10 +44,10 @@ function push(t,   i, start, h, ok, sum, lost, n, label) {
     h = h cell(s[i]); n++
     if (s[i] >= 0) { ok++; sum += s[i] } else lost++
   }
-  label = (t < 0) ? "✕ timeout" : sprintf("● %d ms", t)
+  label = (t < 0) ? "timeout" : sprintf("%d ms", t)
 
   print "~~~"
-  printf "%s | color=%s\n", label, hex(t)
+  printf "%s %s\n", dot(t), label
   print "---"
   printf "%s | ansi=true font=Menlo size=12\n", h
   if (ok) printf "avg %.0f ms · loss %d/%d | font=Menlo size=12\n", sum/ok, lost, n
