@@ -11,7 +11,7 @@ while :; do ping -i 1 "$HOST" 2>/dev/null; sleep 2; done | awk -v host="$HOST" '
 BEGIN { N = 20; ESC = sprintf("%c", 27); print "~~~"; print "… | color=#8E8E93"; fflush() }
 
 function hex(t) {
-  if (t < 0)   return "#8E8E93"
+  if (t < 0)   return "#3A3A3C"
   if (t < 50)  return "#34C759"
   if (t < 100) return "#FFCC00"
   if (t < 200) return "#FF9500"
@@ -30,7 +30,7 @@ function sfcfg(t,   c, cmd, b) {
 
 # nearest xterm-256 colors to hex() (SwiftBar has no truecolor ANSI)
 function cell(t,   c) {
-  if (t < 0) return ESC "[90m░" ESC "[0m"
+  if (t < 0) return ESC "[38;5;238m░" ESC "[0m"
   if (t < 50)       c = 77
   else if (t < 100) c = 220
   else if (t < 200) c = 208
